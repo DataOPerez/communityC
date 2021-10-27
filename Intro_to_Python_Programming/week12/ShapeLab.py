@@ -3,6 +3,7 @@ from graphics import *
 
 # create classes here and their methods
 class Shape():
+
     def __init__(self, numSides, shapeName, nameAnchor, messageAnchor):
         self.__numSides = numSides
         self.__shapeName = shapeName
@@ -10,29 +11,12 @@ class Shape():
         self.__messageAnchor = messageAnchor
 
     def displayName(self, win:GraphWin):
-        message = f'{self.__shapeName}'
+        message = Text(self.__nameAnchor, f'{self.__shapeName}')
+        message.draw(win)
 
     def displayNumSides(self, win:GraphWin):
-        message = f'{self.__numSides}'
-
-class Square(Shape):
-
-    def __init__(self, numSides, shapeName, nameAnchor, messageAnchor):
-        super().__init__(numSides, shapeName, nameAnchor, messageAnchor)
-        self.__nameAnchor = nameAnchor
-        self.__messageAnchor = messageAnchor
-
-    def drawShape(self, win:GraphWin):
-        pass
-
-class Ball(Shape):
-    pass
-
-class Triangle(Shape):
-    pass
-
-class Octagon(Shape):
-    pass
+        message = Text(Point(100, 100), f'{self.__numSides}')
+        message.draw(win)
 
 
 
