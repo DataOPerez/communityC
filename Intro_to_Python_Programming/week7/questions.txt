@@ -1,0 +1,4 @@
+function2
+Q: The instructions say "from the start of full name to the first space.
+I'm assuming we are not including the space."
+
