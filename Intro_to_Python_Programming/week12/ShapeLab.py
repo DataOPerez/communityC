@@ -19,6 +19,8 @@ class Shape():
         message.draw(win)
 
 
+class Square(Shape):
+    
 
 
 
