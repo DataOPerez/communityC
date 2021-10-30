@@ -3,14 +3,15 @@ from graphics import *
 
 # create classes here and their methods
 class Shape():
+    '''This is my super class "Shape". Ideally all the classes that are a sub class from this will inherit all of it's methods and attributes.'''
 
-    def __init__(self, numSides, shapeName, nameAnchor, messageAnchor):
+    def __init__(self, numSides, shapeName, nameAnchor, messageAnchor): # this is the constructor this will build our objects attributes when called.
         self.__numSides = numSides
         self.__shapeName = shapeName
         self.__nameAnchor = nameAnchor
         self.__messageAnchor = messageAnchor
 
-    def displayName(self, win:GraphWin):
+    def displayName(self, win:GraphWin): # this method isn't run automatically it's runs down below when going through the loop shape.displayName
         shapName = Text(self.__nameAnchor,f'{self.__shapeName}')
         shapName.draw(win)
 
@@ -19,8 +20,13 @@ class Shape():
         numSides.draw(win)
 
 
-class Square(Shape):
-
+class Square(Shape): # we can tell this is a subclass because it extends the "Shape" class: Square(Shape).
+    '''At this point these subclasses are the same. They will accept only two parameteres a name anchor and a message anchor
+    But we need to build the object from the "superclass" (aka Shape). And Shape take 4 parameters. Where do we get the number of sides and the shape name?
+    
+    We hard code it in. DUH!
+    
+    On thop of that we have a drawShape method. This is in charge of drawing the shape!'''
     def __init__(self, nameAnchor, messageAnchor):
         super().__init__(4, 'Square', nameAnchor, messageAnchor)
     
@@ -61,7 +67,7 @@ class Octagon(Shape):
 
     
 
-
+# --- Anything below this is written by my professor --- #
 
 def main():
     win = GraphWin("Shape Test", 600, 600)
