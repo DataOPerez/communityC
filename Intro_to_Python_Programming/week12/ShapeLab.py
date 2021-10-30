@@ -11,15 +11,54 @@ class Shape():
         self.__messageAnchor = messageAnchor
 
     def displayName(self, win:GraphWin):
-        message = Text(self.__nameAnchor, f'{self.__shapeName}')
-        message.draw(win)
+        shapName = Text(self.__nameAnchor,f'{self.__shapeName}')
+        shapName.draw(win)
 
     def displayNumSides(self, win:GraphWin):
-        message = Text(Point(100, 100), f'{self.__numSides}')
-        message.draw(win)
+        numSides = Text(self.__messageAnchor, f'A shape as {self.__numSides} sides')
+        numSides.draw(win)
 
 
 class Square(Shape):
+
+    def __init__(self, nameAnchor, messageAnchor):
+        super().__init__(4, 'Square', nameAnchor, messageAnchor)
+    
+    def drawShape(self, win:GraphWin):
+        squareShape = Rectangle(Point(50, 50), Point(250, 250))
+        squareShape.setFill('blue')
+        squareShape.draw(win)
+
+class Ball(Shape):
+    def __init__(self, nameAnchor, messageAnchor):
+        super().__init__(0, "Circle", nameAnchor, messageAnchor)
+
+    def drawShape(self, win:GraphWin):
+        circleShape = Circle(Point(450, 100), 50)
+        circleShape.setFill('Yellow')
+        circleShape.draw(win)
+
+class Triangle(Shape):
+
+    def __init__(self, nameAnchor, messageAnchor):
+        super().__init__(3, "Triangle", nameAnchor, messageAnchor)
+
+    def drawShape(self, win:GraphWin):
+        triangleShape = Polygon(Point(50, 500), Point(100, 400), Point(150, 500))
+        triangleShape.setFill('Orange')
+        triangleShape.draw(win)
+
+
+class Octagon(Shape):
+
+    def __init__(self, nameAnchor, messageAnchor):
+        super().__init__("8", "Octagon", nameAnchor, messageAnchor)
+
+    def drawShape(self, win:GraphWin):
+        octagonShape = Polygon(Point(400, 400), Point(450, 400), Point(500, 450), Point(500, 500), Point(450, 550), Point(400, 550), Point(350, 500), Point(350, 450))
+        octagonShape.setFill("Purple")
+        octagonShape.draw(win)
+
     
 
 
@@ -33,9 +72,9 @@ def main():
 
     shapes = []
     shapes.append(Square(Point(50, 20), Point(100, 280)))
-    # shapes.append(Ball(Point(350, 20), Point(400, 280)))  # remove comment to test Ball
-    # shapes.append(Triangle(Point(50, 320), Point(100, 570)))  # remove comment to test Triangle
-    # shapes.append(Octagon(Point(350, 320), Point(400, 570)))  # remove comment to test Octagon
+    shapes.append(Ball(Point(350, 20), Point(400, 280)))  # remove comment to test Ball
+    shapes.append(Triangle(Point(50, 320), Point(100, 570)))  # remove comment to test Triangle
+    shapes.append(Octagon(Point(350, 320), Point(400, 570)))  # remove comment to test Octagon
 
     for shape in shapes:
         shape.displayName(win)
