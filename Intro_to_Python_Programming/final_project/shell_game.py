@@ -24,7 +24,6 @@ BALL_LOCATIONS = [
     Point(300, 450),
     Point(150, 450),
     Point(450, 450),
-
     ]
 
 '''
@@ -107,6 +106,7 @@ class Ball():
 
 class Shell():
     SHELL_LOCATIONS = (
+            
         Point(150, 300),
         Point(300, 300),
         Point(450, 300),
@@ -132,6 +132,13 @@ class Shell():
         for i in range(12):
             self.__shell.move(6, 6)
             update(30)
+
+    def moveShell_V2(self, dx_multipler = 1, dy_multipler = 1):
+        ONE_DISTANCE = 150
+
+        if dx_multipler > dy_multipler:
+            for i in range(dx_multipler * ONE_DISTANCE):
+                self.__shell.move()
 
 
     @staticmethod
@@ -176,6 +183,9 @@ class Shell():
 
 
 
+    
+
+
 def main():
     win = GraphWin('Shell Game', 600, 600) # window for the shell game
     Line(Point(150, 0), Point(150, 600)).draw(win)
@@ -190,7 +200,6 @@ def main():
 
     ball = Ball()
     ball.drawBall(win)
-    input('ball drawn')
 
     # for i in range(6):
     #     ball.moveBallRandomly()
@@ -203,15 +212,14 @@ def main():
     #     print(shell)
     #     shell_list.append(shell)
 
-    shell  = Shell(Shell.SHELL_LOCATIONS[1], 'aqua')
-    shell2 = Shell(Shell.SHELL_LOCATIONS[2], 'pink')
+    shell  = Shell(Shell.SHELL_LOCATIONS[0], 'aqua')
+    shell2 = Shell(Shell.SHELL_LOCATIONS[1], 'pink')
     shell.drawShell(win)
     shell2.drawShell(win)
-    input()
+    win.getMouse()
     Shell.shuffleShells(shell, shell2)
-    #shell.moveShell(win)
+    win.getMouse()
 
-    input()
 
 
 
