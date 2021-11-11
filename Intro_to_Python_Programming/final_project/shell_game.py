@@ -29,6 +29,7 @@ BALL_LOCATIONS = [
 '''
 
 
+from time import sleep
 from graphics import *
 import random
 
@@ -113,75 +114,89 @@ class Shell():
     )
 
     def __init__(self, shellCenter : Point = SHELL_LOCATIONS[1], color : str = 'yellow'):
-        self.__location = Shell.SHELL_LOCATIONS.index(shellCenter)
+        self.__location = shellCenter
         self.__color = color
-        self.__shell = Arc(Point(shellCenter.getX() - 50, shellCenter.getY() - 25), Point(shellCenter.getX() + 50, shellCenter.getY() + 75), 0 , 180) #Arc(Point(250, 275), Point(350, 375), 0, 180)
+        self.__shell = Arc(Point(shellCenter.getX() - 50, shellCenter.getY() - 25), Point(shellCenter.getX() + 50, shellCenter.getY() + 75), 0 , 180)
     
     def __str__(self):
-        return f'Shell Location: {self.__location} Shell Color: {self.__color}'
+        return f'\nShell Location: {self.__location}\nShell Color: {self.__color}'
     
     def drawShell(self, win: GraphWin):
         self.__shell.setFill(self.__color)
         self.__shell.draw(win)
 
-    def moveShell(self, win:GraphWin):
-        for i in range(12):
-            self.__shell.move(6, -6)
-            update(30)
-            
-        for i in range(12):
-            self.__shell.move(6, 6)
-            update(30)
+    def getLocation(self):
+        return self.__location
 
-    def moveShell_V2(self, dx_multipler = 1, dy_multipler = 1):
-        ONE_DISTANCE = 150
+    def setLocation (self, location: Point):
+        self.__location = location
+    
+    def getColor(self):
+        return self.__color
 
-        if dx_multipler > dy_multipler:
-            for i in range(dx_multipler * ONE_DISTANCE):
-                self.__shell.move()
+    def getShell(self):
+        return self.__shell
 
+    def moveShell(self, dx:int = 150, dy:int=0):
+        
+        if dx == 150:
+            for i in range(15):
+                self.__shell.move(10, 0)
+                time.sleep(.01)
+        elif dx == -150:
+            for i in range(15):
+                self.__shell.move(-10, 0)
+                time.sleep(.01)
+        elif dx == 300:
+            for i in range(15):
+                self.__shell.move(20, 0)
+                time.sleep(.01)
+        elif dx == -300:
+            for i in range(15):
+                self.__shell.move(-20, 0)
+                time.sleep(.01)
 
     @staticmethod
-    def shuffleShells(shell1, shell2):
-        ''' I need to figure out how to switch the shell positions'''
-        s1x = shell1.__shell.getCenter().getX()
-        s1y = shell1.__shell.getCenter().getY()
+    def shuffle_shells(shell_list : list):
+        ''' Shuffles shells at random'''
 
-        s2x = shell2.__shell.getCenter().getX()
-        s2y = shell2.__shell.getCenter().getY()
+        randomNumbersList = [] # create random number list to keep track of random shell selection
+        while len(randomNumbersList) < 2: # loop checking length of list
+            randomNumber = random.randint(0, len(shell_list) - 1 ) # random number 
+            if randomNumber not in randomNumbersList: # if the # is not in the list append
+                randomNumbersList.append(randomNumber)
+        
+        shell1 = shell_list[randomNumbersList[0]]
+        shell2 = shell_list[randomNumbersList[1]]
 
+        shell1_location = shell1.getLocation()
+        shell2_location = shell2.getLocation()
 
-        print("shell1 ", s1x, s1y)
-        print("shell2 ",s2x, s2y)
+        shell1_x = shell1.__location.getX() # get x location of both shells
+        shell2_x = shell2.__location.getX()
 
-        if s2x > s1x:
-            dx = s2x - s1x
-        elif s2x < s1x:
-            dx = (s1x - s2x) * -1
+        if shell1_x > shell2_x: # test which x location is greater and subtract the greater from the lower value
+            dx = shell1_x - shell2_x
+
+            shell2.moveShell(dx, 0) # move shell according to which is bigger
+            shell1.moveShell(dx * -1, 0)
+
+        elif shell1_x < shell2_x:
+            dx = shell2_x - shell1_x
+
+            shell1.moveShell(dx, 0)
+            shell2.moveShell(dx * -1, 0)
+
         else:
             dx = 0
+
+        shell1.setLocation(shell2_location)
+        shell2.setLocation(shell1_location)
         
+        # LOCATION NEED TO SWITCH AND WE NEED TO FIGURE OUT WHY THE POINTS ARE
+        # INCREASING BY 25 ON THE Y AXIS
 
-        if s2y > s1y:
-            dy = s2y - s1y
-        elif s2y < s1y:
-            dy = (s1y - s2y) * -1
-        else:
-            dy = 0
-
-        print('direction change in x: ', dx)
-        print('direction change in y: ', dy)
-
-        if dx > 0:
-            for i in range(int(abs(dx))):
-                shell1.__shell.move(1, 0)
-                shell2.__shell.move(1 * -1, 0 * -1)
-        else:
-            for i in range(int(abs(dx))):
-                shell2.__shell.move(1, 0)
-                shell1.__shell.move(1 * -1, 0 * -1)
-
-
+        
 
     
 
@@ -201,24 +216,21 @@ def main():
     ball = Ball()
     ball.drawBall(win)
 
-    # for i in range(6):
-    #     ball.moveBallRandomly()
-    # input('ball moved')
+    for i in range(60):
+        ball.moveBallRandomly()
+    input('ball moved')
 
-    # shell_list = []
-    # for i in range(0, 3):
-    #     shell = Shell(Shell.SHELL_LOCATIONS[i], color_list[i])
-    #     shell.drawShell(win)
-    #     print(shell)
-    #     shell_list.append(shell)
+    shell_list = []
+    for i in range(0, 3):
+        shell = Shell(Shell.SHELL_LOCATIONS[i], color_list[i])
+        shell.drawShell(win)
+        shell_list.append(shell)
 
-    shell  = Shell(Shell.SHELL_LOCATIONS[0], 'aqua')
-    shell2 = Shell(Shell.SHELL_LOCATIONS[1], 'pink')
-    shell.drawShell(win)
-    shell2.drawShell(win)
     win.getMouse()
-    Shell.shuffleShells(shell, shell2)
+    for i in range(60):
+        Shell.shuffle_shells(shell_list)
     win.getMouse()
+
 
 
 
