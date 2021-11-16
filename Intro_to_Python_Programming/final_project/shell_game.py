@@ -254,6 +254,10 @@ def intoMessage():
     toSeeShells_text.setSize(18)
     toSeeShells_text.setStyle('bold italic')
 
+    
+    inputSpeed = Entry(Point(300, 150), 12)
+    inputSpeed.setStyle('bold italic')
+
     toShuffle_text = Text(Point(300, 150), 'Click to shuffle!')
     toShuffle_text.setSize(18)
     toShuffle_text.setStyle('bold italic')
@@ -270,7 +274,7 @@ def intoMessage():
     lose_text.setSize(18)
     lose_text.setStyle('bold italic')
 
-    diffculty = Text(Point(300, 150), "Choose a difficult setting ('Easy', 'Medium', 'Hard')")
+    diffculty = Text(Point(300, 100), "Choose a difficult setting ('Easy', 'Medium', 'Hard'). Press Enter.")
     diffculty.setSize(18)
     diffculty.setStyle('bold italic')
 
@@ -278,6 +282,7 @@ def intoMessage():
         'title' : title,
         'toStart' : toStart_text,
         'toSeeShells' : toSeeShells_text,
+        'inputSpeed' : inputSpeed,
         'toShuffle' : toShuffle_text,
         'ballQuestion' : ballQuestion,
         'diffculty' : diffculty,
@@ -316,8 +321,12 @@ def main():
     
     messages_dict['title'].undraw()
     messages_dict['toStart'].undraw()
-    messages_dict['toSeeShells'].draw(win)
+    
+    messages_dict['diffculty'].draw(win)
+    speed = messages_dict['inputSpeed'].draw(win)
+    win.checkKey()
 
+    messages_dict['toSeeShells'].draw(win)
     win.getMouse()
     messages_dict['toSeeShells'].undraw()
 
