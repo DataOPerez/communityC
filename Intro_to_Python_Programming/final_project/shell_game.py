@@ -31,7 +31,7 @@ BALL_LOCATIONS = [
 
 from time import sleep
 from tkinter import getint
-from tkinter.constants import CURRENT
+
 
 from graphics import *
 import random
@@ -306,6 +306,12 @@ def main():
     Line(Point(0, 450), Point(600, 450)).draw(win)
     Line(Point(0, 600), Point(600, 600)).draw(win)
 
+    diffculty_list = [
+        'easy',
+        'medium',
+        'hard'
+    ]
+
 
     ### start of the final project ###
     messages_dict = intoMessage()
@@ -323,8 +329,18 @@ def main():
     messages_dict['toStart'].undraw()
     
     messages_dict['diffculty'].draw(win)
-    speed = messages_dict['inputSpeed'].draw(win)
-    win.checkKey()
+    messages_dict['inputSpeed'].draw(win)
+    
+    win.getMouse()
+    speed = messages_dict['inputSpeed'].getText()
+    while speed.lower() not in diffculty_list:
+        win.getMouse()
+        speed = messages_dict['inputSpeed'].getText()
+    messages_dict['inputSpeed'].undraw()
+    messages_dict['diffculty'].undraw()
+
+
+    
 
     messages_dict['toSeeShells'].draw(win)
     win.getMouse()

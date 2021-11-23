@@ -53,9 +53,6 @@ def main():
             print(Mouse.miceEaten)
         if isEaten(badMouse, snake):
             badMouse.eaten(snake, win)
-            
-            
-
             print(Mouse.bad_miceEaten)
         
         if Mouse.bad_miceEaten == 3:
